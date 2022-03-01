@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/gzuaz/AndroidStudioProjects/Proyecto_DAS/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2455" />
+        <entry key="..\:/Users/gzuaz/AndroidStudioProjects/Proyecto_DAS/app/src/main/res/drawable/button_redondeado.xml" value="0.1905" />
+        <entry key="..\:/Users/gzuaz/AndroidStudioProjects/Proyecto_DAS/app/src/main/res/drawable/button_redondeado_border.xml" value="0.2595" />
         <entry key="..\:/Users/gzuaz/AndroidStudioProjects/Proyecto_DAS/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2455" />
         <entry key="..\:/Users/gzuaz/AndroidStudioProjects/Proyecto_DAS/app/src/main/res/layout/activity_login.xml" value="0.264" />
       </map>
