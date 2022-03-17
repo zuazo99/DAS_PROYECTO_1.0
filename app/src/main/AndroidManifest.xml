@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"

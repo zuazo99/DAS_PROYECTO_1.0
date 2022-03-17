@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.proyecto_das.R;
 
-public class MainActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity {
 
 
 
