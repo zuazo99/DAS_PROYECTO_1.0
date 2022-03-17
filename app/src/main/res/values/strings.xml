@@ -5,7 +5,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="koala">Koala</string>
-    <string name="la_despensa">La Despensa</string>
-    <string name="nuestra_aplicacion_tarararararaa">Nuestra aplicacion tarararararaa....</string>
+    <string name="nombreApp">Mundo Glaciar</string>
+    <string name="descripcionApp">Compra los mejores productos en nuestra tienda</string>
     <string name="buscar">Buscar</string>
 </resources>
