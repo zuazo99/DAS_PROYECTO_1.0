@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_das.R;
 import com.example.proyecto_das.models.Categoria;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -48,8 +49,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             categoriaFoto = itemView.findViewById(R.id.imageViewCategoria);
         }
 
+        public void bind(final Categoria categoria, final OnItemClickListener itemListener) {
+            categoriaNombre.setText(categoria.getNombre());
+            categoriaDescripcion.setText(categoria.getDescripcion());
+            Picasso.get().load(categoria.getImagen()).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
 
-    }
+        }
+
+
+        }
 
     public interface OnItemClickListener {
         void onItemClick(Categoria categoria, int position);
