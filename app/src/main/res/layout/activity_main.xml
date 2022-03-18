@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".activities.CategoryActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="349dp"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="349dp"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -19,24 +38,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="3dp"
-            android:shadowColor="@color/teal_200"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="5dp"
             android:text="@string/nombreApp"
             android:textColor="#FF5722"
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/open_sans_extra_bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewDescripcion"
-            android:layout_width="wrap_content"
+            android:layout_width="279dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewTitulo"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="21dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="61dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="53dp"
             android:text="@string/descripcionApp"
-            />
+            android:fontFamily="@font/open_sans_light"/>
 
         <ImageView
             android:id="@+id/imagenCarrito"
@@ -52,49 +73,46 @@
             android:id="@+id/imagenOpcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="113dp"
+            android:layout_marginStart="65dp"
             android:layout_marginEnd="16dp"
             android:layout_toEndOf="@+id/textViewTitulo"
             app:srcCompat="@drawable/ic_account_settings" />
+
     </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/buscador_bg"
-        android:drawableLeft="@drawable/ic_baseline_search_24"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="@string/buscar"
-        android:inputType="textPersonName"
-        android:paddingStart="12dp"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/custom_search_view"
+        android:elevation="20dp"
+        android:queryHint="Search Here..."
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:id="@+id/recyclerViewCategoria"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="16dp"
         android:padding="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/categoriaFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="24dp"
+        android:src="@android:drawable/ic_menu_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@android:drawable/ic_menu_add"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

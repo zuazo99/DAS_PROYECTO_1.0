@@ -1,6 +1,7 @@
 package com.example.proyecto_das.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.proyecto_das.R;
 import com.example.proyecto_das.models.Categoria;
 import com.squareup.picasso.Picasso;
@@ -21,20 +21,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private int layout;
     private OnItemClickListener itemClickListener;
 
+
+    public CategoryAdapter(List<Categoria> categorias, int layout, OnItemClickListener itemClickListener) {
+        this.context = context;
+        this.categorias = categorias;
+        this.layout = layout;
+        this.itemClickListener = itemClickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
+        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        context = parent.getContext();
+        ViewHolder vh = new ViewHolder(v);
+        return vh;    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.bind(categorias.get(position), itemClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return categorias.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
