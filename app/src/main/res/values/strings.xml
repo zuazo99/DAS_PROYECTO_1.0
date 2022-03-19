@@ -8,4 +8,5 @@
     <string name="nombreApp">Mundo Glaciar</string>
     <string name="descripcionApp">Compra los mejores productos en nuestra tienda</string>
     <string name="buscar">Buscar</string>
+    <string name="nombre_add_edit_categoria">Nombre</string>
 </resources>

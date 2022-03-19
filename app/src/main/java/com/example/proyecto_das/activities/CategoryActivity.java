@@ -1,5 +1,6 @@
 package com.example.proyecto_das.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.example.proyecto_das.R;
 import com.example.proyecto_das.adapters.CategoryAdapter;
 import com.example.proyecto_das.models.Categoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -47,7 +49,6 @@ public class CategoryActivity extends AppCompatActivity {
                 Toast.makeText(CategoryActivity.this, "FAB", Toast.LENGTH_SHORT).show();
             }
         });
-
         setHideShowFAB();
 
         adapter = new CategoryAdapter(categorias, R.layout.card_view_category, new CategoryAdapter.OnItemClickListener() {
@@ -56,6 +57,7 @@ public class CategoryActivity extends AppCompatActivity {
 
             }
         });
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -70,5 +72,36 @@ public class CategoryActivity extends AppCompatActivity {
                     fab.show();
             }
         });
+    }
+
+    // ** CRUD **//
+    private void crearCategoria(String nombre, String imagen, String descripcion){
+        realm.beginTransaction();
+        Categoria categoria = new Categoria(nombre, imagen, descripcion);
+        realm.copyToRealm(categoria);
+        realm.commitTransaction();
+    }
+
+    private void editarCategoria(String imagen, String descripcion, Categoria categoria){
+        realm.executeTransaction(r->{
+            categoria.setImagen(imagen); categoria.setDescripcion(descripcion);
+            realm.copyToRealmOrUpdate(categoria);
+        });
+    }
+
+    private void borrarCategoria(Categoria categoria){
+        realm.beginTransaction();
+        categoria.deleteFromRealm();
+        realm.commitTransaction();
+    }
+
+    // ** DIALOGS ** //
+    private void dialogCrearCategoria(String titulo, String mensaje){
+        /*
+        Creamos el metodo para que nos apare
+         */
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+
     }
 }
