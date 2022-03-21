@@ -67,7 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public void bind(final Categoria categoria, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
             categoriaNombre.setText(categoria.getNombre());
             categoriaDescripcion.setText(categoria.getDescripcion());
-            Picasso.get().load(R.drawable.freeride).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
+            Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

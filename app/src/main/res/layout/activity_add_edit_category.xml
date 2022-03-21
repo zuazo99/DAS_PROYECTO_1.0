@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.AddEditCategoryActivity">
+    tools:context=".activities.AddEditCategoryActivity"
+    >
     
     
     <ImageView
@@ -50,6 +51,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="6dp"
                 android:background="@android:drawable/ic_menu_view"
+                android:focusable="true"
                 android:gravity="right" />
 
             <EditText
@@ -63,6 +65,18 @@
                 android:inputType="textMultiLine"
                 android:maxLength="100"
                 android:maxLines="2" />
+
+            <Button
+                android:id="@+id/btnGaleria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextCategoryDescription"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="25dp"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:text="@string/btnGaleria"
+                android:elevation="20dp"/>
 
 
         </RelativeLayout>

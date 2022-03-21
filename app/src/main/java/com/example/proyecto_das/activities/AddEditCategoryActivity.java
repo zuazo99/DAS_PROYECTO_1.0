@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private EditText editTextCategoryLink;
     private FloatingActionButton fab;
     private Button btnPreview;
+    private Button btnGallery;
 
 
     @Override
@@ -53,6 +55,22 @@ public class AddEditCategoryActivity extends AppCompatActivity {
             categoria = getCategoriaById(categoriaId);
             setDatosCategoria();
         }
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewCategory();
+            }
+        });
+
+        btnPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String link = editTextCategoryLink.getText().toString();
+                if (link.length()>0){
+                    loadImageLink(link);
+                }
+            }
+        });
 
 
 
@@ -65,6 +83,8 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         editTextCategoryDescription = findViewById(R.id.editTextCategoryDescription);
         editTextCategoryLink = findViewById(R.id.editTextCategoryLink);
         fab = findViewById(R.id.FABSaveCategory);
+        btnPreview = findViewById(R.id.buttonPreview);
+        btnGallery = findViewById(R.id.btnGaleria);
     }
 
     private void setActivityTitle(){
@@ -79,6 +99,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         editTextCategoryName.setText(categoria.getNombre());
         editTextCategoryDescription.setText(categoria.getDescripcion());
         editTextCategoryLink.setText(categoria.getImagen());
+        Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).into(categoryImage);
     }
 
     private void loadImageLink(String link){
@@ -93,6 +114,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     }
 
     private boolean validarDatosCategoriaNueva(){
+        // Validamos en este metodo que los datos esten correctos y la informacion completa, que no haya ningun editTExt vacio
         if (editTextCategoryName.getText().toString().length() > 0 &&
                 editTextCategoryDescription.getText().toString().length() > 0 &&
                 editTextCategoryLink.getText().toString().length() > 0){
@@ -112,7 +134,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
             if (!isCreation) categoria.setId(categoriaId);
 
             realm.executeTransaction(r->{
-                r.copyToRealmOrUpdate(categoria);
+                r.copyToRealmOrUpdate(categoria); // Esto lo que hace es crear o actualiza una categoria
             });
             goToMainActivity();
         }else{

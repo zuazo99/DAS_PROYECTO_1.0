@@ -39,7 +39,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
         categorias = realm.where(Categoria.class).findAll();
-        crearCategoria("Freeride", String.valueOf(R.drawable.freeride), "Para los amantes del puro esqui");
+//        crearCategoria("Freeride", String.valueOf(R.drawable.freeride), "Para los amantes del puro esqui");
         recyclerView = findViewById(R.id.recyclerViewCategoria);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
