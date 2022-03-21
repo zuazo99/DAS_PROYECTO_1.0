@@ -6,6 +6,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class CategoryActivity extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
         categorias = realm.where(Categoria.class).findAll();
-
+        crearCategoria("Freeride", String.valueOf(R.drawable.freeride), "Para los amantes del puro esqui");
         recyclerView = findViewById(R.id.recyclerViewCategoria);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -45,8 +48,9 @@ public class CategoryActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // TODO
-                Toast.makeText(CategoryActivity.this, "FAB", Toast.LENGTH_SHORT).show();
+               // Cuando clicke en el boton pasaramos a la actividad de editar o crear una categoria nueva
+                Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
+                startActivity(intent);
             }
         });
         setHideShowFAB();
@@ -54,10 +58,26 @@ public class CategoryActivity extends AppCompatActivity {
         adapter = new CategoryAdapter(categorias, R.layout.card_view_category, new CategoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Categoria categoria, int position) {
-
+                //Si pulsa el card view --> activity de editar o crear una nueva categoria
+                Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
+                intent.putExtra("id", categoria.getId());
+                startActivity(intent);
+            }
+        }, new CategoryAdapter.OnButtonClickListener() {
+            @Override
+            public void onButtonClick(Categoria categoria, int position) {
+                // Boton delete borramos la categoria --> le avisamos mediante un dialog
+                dialogBorrarCategoria("Borrar Categoria", "Estas seguro que quieres borrar" + categoria.getNombre() + "?", position);
             }
         });
+
         recyclerView.setAdapter(adapter);
+        categorias.addChangeListener(new RealmChangeListener<RealmResults<Categoria>>() {
+            @Override
+            public void onChange(RealmResults<Categoria> categorias) {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
 
@@ -89,18 +109,28 @@ public class CategoryActivity extends AppCompatActivity {
         });
     }
 
-    private void borrarCategoria(Categoria categoria){
+    private void borrarCategoria(int position){
         realm.beginTransaction();
-        categoria.deleteFromRealm();
+        categorias.get(position).deleteFromRealm();
         realm.commitTransaction();
     }
 
     // ** DIALOGS ** //
-    private void dialogCrearCategoria(String titulo, String mensaje){
+    private void dialogBorrarCategoria(String title, String message, final int position){
         /*
         Creamos el metodo para que nos apare
          */
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        borrarCategoria(position);
+                        Toast.makeText(CategoryActivity.this, "Se ha borrado con exito", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null).show();
 
 
     }

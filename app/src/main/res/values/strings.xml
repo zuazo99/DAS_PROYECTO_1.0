@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Proyecto_DAS</string>
+    <string name="app_name">Mundo Glaciar</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -9,4 +9,11 @@
     <string name="descripcionApp">Compra los mejores productos en nuestra tienda</string>
     <string name="buscar">Buscar</string>
     <string name="nombre_add_edit_categoria">Nombre</string>
+    <string name="link_add_edit_categoria">Link Imagen... (http://myimg.com)</string>
+    <string name="description_add_edit_category">Descripción</string>
+    <string name="deleteCategoria">BORRAR</string>
+    <string name="editCategoria">EDITAR</string>
+    <string name="titulo_Editar_Actividad">Editar Categoria</string>
+    <string name="titulo_Add_Actividad">Crear nueva Categoria</string>
+    <string name="addNewCategoryToast">Los datos no son validos, intentalo de nuevo</string>
 </resources>

@@ -107,8 +107,8 @@
         android:id="@+id/categoriaFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="64dp"
         android:src="@android:drawable/ic_menu_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
