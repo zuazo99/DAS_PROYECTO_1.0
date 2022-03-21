@@ -1,8 +1,18 @@
 package com.example.proyecto_das.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +24,10 @@ import com.example.proyecto_das.R;
 import com.example.proyecto_das.models.Categoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URI;
 
 import io.realm.Realm;
 
@@ -33,6 +47,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private Button btnPreview;
     private Button btnGallery;
 
+    private static final int PHOTO_SELECTED = 1; // El codigo del intent para luego poder recuperar la imagen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +87,56 @@ public class AddEditCategoryActivity extends AppCompatActivity {
             }
         });
 
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargarImagenes();
+            }
+        });
+
+
+    }
+
+    private void cargarImagenes(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent imageReturnedIntent) {
+        Uri selectedImageUri = null;
+        Uri selectedImage;
+        String filePath = null;
+        switch (requestCode){
+            case PHOTO_SELECTED:
+                if (requestCode == Activity.RESULT_OK){
+                    selectedImage = imageReturnedIntent.getData();
+                    String selectedPath = selectedImage.getPath();
+                    if (requestCode == PHOTO_SELECTED){
+                        if(selectedPath != null){
+                            InputStream imageStream = null;
+                            try{
+                                imageStream = getContentResolver().openInputStream(selectedImage);
+                            }catch (FileNotFoundException e){
+                                e.printStackTrace();
+                            }
+
+                            // Transformamos la URI de la imagen a inputStream y este en un Bitmap
+                            Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+
+                            // Ponemos nuestro bitmap en un ImageView que tenagmos en la vista
+
+                            categoryImage.setImageBitmap(bmp);
+                        }
+                    }
+                }
+
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+
+        }
 
 
     }
@@ -147,4 +212,26 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
+    // ** COMPROBAR PERMISOS ** //
+
+    private void checkForPermission(){
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED){
+            // El permiso no esta concedido, pedirlo
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PHOTO_SELECTED);
+        }
+    }
+
+    private boolean hasPermission(String permissionToCheck) {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, permissionToCheck);
+        return (permissionCheck == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
