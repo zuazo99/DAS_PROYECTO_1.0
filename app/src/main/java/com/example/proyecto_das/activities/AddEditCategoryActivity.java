@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -142,7 +143,9 @@ public class AddEditCategoryActivity extends AppCompatActivity {
                         Uri path = data.getData();
                         Toast.makeText(this, path.getPath(), Toast.LENGTH_LONG).show();
                         categoryImage.setImageURI(path);
-//                        Picasso.get().load(new File(path.getPath())).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
+                        //File file = new File();
+
+//                        Picasso.get().load(file).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
 //                            @Override
 //                            public void onSuccess() {
 //
@@ -163,43 +166,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     }
 
 
-    //    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent imageReturnedIntent) {
-//        Uri selectedImageUri = null;
-//        Uri selectedImage;
-//        String filePath = null;
-//        switch (requestCode){
-//            case PHOTO_SELECTED:
-//                if (requestCode == Activity.RESULT_OK){
-//                    selectedImage = imageReturnedIntent.getData();
-//                    String selectedPath = selectedImage.getPath();
-//                    if (requestCode == PHOTO_SELECTED){
-//                        if(selectedPath != null){
-//                            InputStream imageStream = null;
-//                            try{
-//                                imageStream = getContentResolver().openInputStream(selectedImage);
-//                            }catch (FileNotFoundException e){
-//                                e.printStackTrace();
-//                            }
-//
-//                            // Transformamos la URI de la imagen a inputStream y este en un Bitmap
-//                            Bitmap bmp = BitmapFactory.decodeStream(imageStream);
-//
-//                            // Ponemos nuestro bitmap en un ImageView que tenagmos en la vista
-//
-//                            categoryImage.setImageBitmap(bmp);
-//                        }
-//                    }
-//                }
-//
-//                break;
-//            default:
-//                super.onActivityResult(requestCode, resultCode, data);
-//
-//        }
-//
-//
-//    }
+
 
     private void viewReferences(){
         //Metodo para hacer referencia a las views
@@ -278,7 +245,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
 
     private void olderVersion() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)){
             intent.setType("image/*");
             startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
@@ -308,7 +275,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         switch (requestCode) {
             case PHOTO_SELECTED:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
                     startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
                 }else{
