@@ -7,13 +7,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_das.R;
 import com.example.proyecto_das.models.Categoria;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
@@ -67,7 +70,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public void bind(final Categoria categoria, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
             categoriaNombre.setText(categoria.getNombre());
             categoriaDescripcion.setText(categoria.getDescripcion());
-            Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
+           // Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
+
+            if (categoria.getFromGalery()){
+                Toast.makeText(context, "Entra al metodo bind y getFromGaley--> " + categoria.getFromGalery(), Toast.LENGTH_SHORT).show();
+                Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).into(categoriaFoto, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(context, "Error!!! "+ categoria.getImagen(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+            }else{
+                Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).into(categoriaFoto);
+
+            }
+
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -7,15 +7,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 
@@ -51,6 +55,10 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Button btnPreview;
     private Button btnGallery;
+    private boolean fromGalery = false;
+    private Uri path;
+    private String direktorio;
+
 
     private static final int PHOTO_SELECTED = 1; // El codigo del intent para luego poder recuperar la imagen
 
@@ -73,6 +81,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
         if(!isCreation){
             categoria = getCategoriaById(categoriaId);
+            fromGalery = categoria.getFromGalery();
             setDatosCategoria();
         }
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +94,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         btnPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fromGalery = false;
                 String link = editTextCategoryLink.getText().toString();
                 if (link.length()>0){
                     loadImageLink(link);
@@ -140,30 +150,57 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         switch (requestCode) {
             case PHOTO_SELECTED:
                 if (resultCode == Activity.RESULT_OK) {
-                        Uri path = data.getData();
+                    //Cargar imagen desde la galeria
+                        path = data.getData();
+                        direktorio = getRealPathFromUri(path);
                         Toast.makeText(this, path.getPath(), Toast.LENGTH_LONG).show();
-                        categoryImage.setImageURI(path);
-                        //File file = new File();
+                        if (direktorio != null) {
+                            fromGalery = true;
+                            Picasso.get().load(new File(getRealPathFromUri(path))).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
+                                @Override
+                                public void onSuccess() {
 
-//                        Picasso.get().load(file).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
-//                            @Override
-//                            public void onSuccess() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(Exception e) {
-//                                Toast.makeText(AddEditCategoryActivity.this, "Error!!", Toast.LENGTH_LONG).show();
-//                            }
-//                        });
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Toast.makeText(AddEditCategoryActivity.this, "Error!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+
+
                 }
                 break;
 
             default:
                 super.onActivityResult(requestCode, resultCode, data);
-
+//
         }
     }
+
+
+
+    // ** Obtener la uri de la imagen ** //
+
+    private String getRealPathFromUri(Uri contentUri){
+        String result = null;
+
+        if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+            if (cursor == null) { // Source is Dropbox or other similar local file path
+                result = contentUri.getPath();
+            } else {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                result = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+            return result;
+    }
+
 
 
 
@@ -190,13 +227,29 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         // aparezcan los datos que ya estan  de la categoria
         editTextCategoryName.setText(categoria.getNombre());
         editTextCategoryDescription.setText(categoria.getDescripcion());
-        editTextCategoryLink.setText(categoria.getImagen());
-        Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).into(categoryImage);
+
+
+        if (fromGalery){
+            Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Toast.makeText(AddEditCategoryActivity.this, "Error en el setDatosCategori", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else{
+            Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).into(categoryImage);
+            editTextCategoryLink.setText(categoria.getImagen());
+        }
     }
 
     private void loadImageLink(String link){
         // Libreria para el manejo de imagenes, pasandole una url carga una imagen
-
         Picasso.get().load(link).fit().into(categoryImage);
     }
 
@@ -205,34 +258,52 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         return realm.where(Categoria.class).equalTo("id", categoriaId).findFirst();
     }
 
-    private boolean validarDatosCategoriaNueva(){
-        // Validamos en este metodo que los datos esten correctos y la informacion completa, que no haya ningun editTExt vacio
-        if (editTextCategoryName.getText().toString().length() > 0 &&
-                editTextCategoryDescription.getText().toString().length() > 0 &&
-                editTextCategoryLink.getText().toString().length() > 0){
-            return true;
-        }else {
-            return false;
-        }
+    private void editarCategoria(String imagen, String descripcion, Categoria categoria){
+        realm.executeTransaction(r->{
+            categoria.setImagen(imagen); categoria.setDescripcion(descripcion);
+            realm.copyToRealmOrUpdate(categoria);
+        });
     }
 
-    private void addNewCategory(){
-        if (validarDatosCategoriaNueva()){
-            String name = editTextCategoryName.getText().toString();
-            String description = editTextCategoryDescription.getText().toString();
-            String link = editTextCategoryLink.getText().toString();
-            Categoria categoria = new Categoria(name, link, description);
+    private boolean validarDatosCategoriaNueva() {
+        // Validamos en este metodo que los datos esten correctos y la informacion completa, que no haya ningun editTExt vacio
+        boolean correcto = false;
+        if (!fromGalery && editTextCategoryName.getText().toString().length() > 0 &&
+                editTextCategoryDescription.getText().toString().length() > 0 &&
+                editTextCategoryLink.getText().toString().length() > 0) {
+            correcto = true;
 
+        } else if(fromGalery && editTextCategoryName.getText().toString().length() > 0 &&
+                editTextCategoryDescription.getText().toString().length() > 0) {
+            correcto = true;
+        }
+
+        return correcto;
+    }
+
+    private void addNewCategory() {
+        String name = null;
+        String description = null;
+        String link = null;
+        if (validarDatosCategoriaNueva()) {
+            name = editTextCategoryName.getText().toString();
+            description = editTextCategoryDescription.getText().toString();
+            link = editTextCategoryLink.getText().toString();
+            boolean galeria = fromGalery;
+            if (galeria) link = direktorio;
+            Categoria categoria = new Categoria(name, link, description);
+            categoria.setFromGalery(galeria);
             if (!isCreation) categoria.setId(categoriaId);
 
-            realm.executeTransaction(r->{
+            realm.executeTransaction(r -> {
                 r.copyToRealmOrUpdate(categoria); // Esto lo que hace es crear o actualiza una categoria
             });
             goToMainActivity();
-        }else{
-            Toast.makeText(this, getString(R.string.addNewCategoryToast) , Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getString(R.string.addNewCategoryToast), Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void goToMainActivity() {
         Intent intent = new Intent(AddEditCategoryActivity.this, CategoryActivity.class);

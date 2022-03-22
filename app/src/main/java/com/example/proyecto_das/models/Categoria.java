@@ -12,6 +12,7 @@ public class Categoria extends RealmObject {
     private String nombre;
     private String imagen;
     private String descripcion;
+    private boolean fromGalery;
     private RealmList<Esqui> esquis;
 
     public Categoria(){
@@ -23,6 +24,7 @@ public class Categoria extends RealmObject {
         this.nombre = nombre;
         this.imagen = imagen;
         this.descripcion = descripcion;
+        //this.fromGalery = false;
         esquis = new RealmList<Esqui>();
     }
 
@@ -33,6 +35,11 @@ public class Categoria extends RealmObject {
     public void setId(int id){
         this.id = id;
     }
+
+    public void setFromGalery(boolean fromGalery){
+        this.fromGalery = fromGalery;
+    }
+    public boolean getFromGalery(){ return fromGalery;}
 
     public String getNombre() {
         return nombre;
