@@ -156,7 +156,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
                         Toast.makeText(this, path.getPath(), Toast.LENGTH_LONG).show();
                         if (direktorio != null) {
                             fromGalery = true;
-                            Picasso.get().load(new File(getRealPathFromUri(path))).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
+                            Picasso.get().load(new File(getRealPathFromUri(path))).placeholder(R.drawable.placeholder).fit().into(categoryImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
 
@@ -230,7 +230,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
 
         if (fromGalery){
-            Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).into(categoryImage, new Callback() {
+            Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).fit().into(categoryImage, new Callback() {
                 @Override
                 public void onSuccess() {
 
@@ -243,7 +243,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
             });
 
         }else{
-            Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).into(categoryImage);
+            Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoryImage);
             editTextCategoryLink.setText(categoria.getImagen());
         }
     }

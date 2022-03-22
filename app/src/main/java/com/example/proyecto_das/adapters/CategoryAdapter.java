@@ -74,7 +74,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
             if (categoria.getFromGalery()){
                 Toast.makeText(context, "Entra al metodo bind y getFromGaley--> " + categoria.getFromGalery(), Toast.LENGTH_SHORT).show();
-                Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).into(categoriaFoto, new Callback() {
+                Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).fit().into(categoriaFoto, new Callback() {
                     @Override
                     public void onSuccess() {
 
@@ -88,7 +88,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 });
 
             }else{
-                Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).into(categoriaFoto);
+                Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoriaFoto);
 
             }
 
