@@ -7,8 +7,15 @@
     android:orientation="vertical"
     tools:context=".activities.AddEditCategoryActivity"
     >
-    
-    
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="30dp"
+        />
     <ImageView
         android:id="@+id/imageViewPreview"
         android:layout_width="match_parent"

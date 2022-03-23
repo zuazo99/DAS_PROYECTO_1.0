@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto_das.R;
@@ -48,6 +49,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private Categoria categoria;
     private Realm realm;
 
+    private TextView textViewTitle;
     private ImageView categoryImage;
     private EditText editTextCategoryName;
     private EditText editTextCategoryDescription;
@@ -207,6 +209,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
     private void viewReferences(){
         //Metodo para hacer referencia a las views
+        textViewTitle = findViewById(R.id.textViewTitle);
         categoryImage = findViewById(R.id.imageViewPreview);
         editTextCategoryName = findViewById(R.id.editTextCategoryName);
         editTextCategoryDescription = findViewById(R.id.editTextCategoryDescription);
@@ -219,7 +222,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private void setActivityTitle(){
         String title = getString(R.string.titulo_Editar_Actividad);
         if (isCreation) title = getString(R.string.titulo_Add_Actividad);
-        setTitle(title);
+        textViewTitle.setText(title);
     }
 
     private void setDatosCategoria(){

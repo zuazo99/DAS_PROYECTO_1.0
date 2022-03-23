@@ -87,7 +87,8 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginTop="30dp"
-        android:elevation="20dp"
+        android:background="@drawable/custom_search_view"
+        app:iconifiedByDefault="true"
         android:queryHint="Search Here..."
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="1.0"
@@ -96,14 +97,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCategoria"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="306dp"
+        android:layout_height="485dp"
+        android:layout_marginTop="20dp"
         android:padding="@dimen/activity_horizontal_margin"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
-        android:scrollbars="vertical"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/categoriaFAB"

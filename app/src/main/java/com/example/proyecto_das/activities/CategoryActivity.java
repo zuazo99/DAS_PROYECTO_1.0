@@ -3,6 +3,7 @@ package com.example.proyecto_das.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class CategoryActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CategoryAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,8 @@ public class CategoryActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
         categorias = realm.where(Categoria.class).findAll();
+
+
 //        crearCategoria("Freeride", String.valueOf(R.drawable.freeride), "Para los amantes del puro esqui");
         recyclerView = findViewById(R.id.recyclerViewCategoria);
         layoutManager = new LinearLayoutManager(this);
@@ -72,12 +76,19 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         categorias.addChangeListener(new RealmChangeListener<RealmResults<Categoria>>() {
             @Override
             public void onChange(RealmResults<Categoria> categorias) {
                 adapter.notifyDataSetChanged();
             }
         });
+
+
+        searchView = findViewById(R.id.searchView);
+
+        //searchView.setQueryHint("Search view");
+        //searchView.setIconifiedByDefault(true);
     }
 
 
