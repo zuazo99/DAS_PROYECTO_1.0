@@ -50,7 +50,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/editTextPrecioEsqui"
+                android:id="@+id/textViewPrecioEsqui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:layout_toEndOf="@+id/editTextPrecioEsqui"
+                android:layout_toEndOf="@+id/textViewPrecioEsqui"
                 android:fontFamily="@font/open_sans_bold"
                 android:inputType="number"
                 android:padding="10dp"
@@ -83,7 +83,7 @@
 
 
             <Button
-                android:id="@+id/buttonEditCategoria"
+                android:id="@+id/buttonEditEsqui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -92,7 +92,7 @@
                 android:textColor="@color/colorAccent" />
 
             <Button
-                android:id="@+id/buttonDeleteCategoria"
+                android:id="@+id/buttonDeleteEsqui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
