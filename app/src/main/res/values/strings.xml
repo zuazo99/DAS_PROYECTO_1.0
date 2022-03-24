@@ -23,4 +23,5 @@
     <string name="dialog_borrar">Borrar</string>
     <string name="titulo_Editar_Esqui">Editar Esqui</string>
     <string name="titulo_Add_Esqui">Añadir nuevo modelo de Esqui</string>
+    <string name="add_edit_esqui_precio">Precio</string>
 </resources>

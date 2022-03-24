@@ -58,6 +58,8 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private Button btnPreview;
     private Button btnGallery;
     private boolean fromGalery = false; // Para saber si la foto es de galeria o no
+    // Atributos que nos ayudan para subir una foto desde la galeria
+
     private Uri path;
     private String direktorio;
 
@@ -232,7 +234,6 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         editTextCategoryName.setText(categoria.getNombre());
         editTextCategoryDescription.setText(categoria.getDescripcion());
 
-
         if (fromGalery){
             Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).fit().into(categoryImage, new Callback() {
                 @Override
@@ -286,6 +287,8 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     }
 
     private void addNewCategory() {
+
+        // Este metodo añade una nueva categoria a la base de datos
         String name = null;
         String description = null;
         String link = null;
