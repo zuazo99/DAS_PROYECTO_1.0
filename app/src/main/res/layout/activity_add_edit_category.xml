@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".activities.AddEditCategoryActivity"
     >
-
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
@@ -100,5 +99,4 @@
             app:borderWidth="0dp" />
 
     </FrameLayout>
-        
 </LinearLayout>

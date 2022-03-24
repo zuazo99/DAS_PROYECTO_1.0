@@ -58,6 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public TextView categoriaDescripcion;
         public ImageView categoriaFoto;
         public Button btnDelete;
+        public Button btnEdit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             categoriaDescripcion = itemView.findViewById(R.id.textViewCategoriaDescripcion);
             categoriaFoto = itemView.findViewById(R.id.imageViewCategoria);
             btnDelete = itemView.findViewById(R.id.buttonDeleteCategoria);
+            btnEdit = itemView.findViewById(R.id.buttonEditCategoria);
         }
 
         public void bind(final Categoria categoria, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
@@ -95,7 +97,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    btnListener.onButtonClick(categoria, getAdapterPosition());
+                    btnListener.onButtonDeleteClick(categoria, getAdapterPosition());
+                }
+            });
+
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    btnListener.onButtonEditClick(categoria, getAdapterPosition());
                 }
             });
 
@@ -116,6 +125,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public interface OnButtonClickListener{
-        void onButtonClick(Categoria categoria, int position);
+        void onButtonDeleteClick(Categoria categoria, int position);
+        void onButtonEditClick(Categoria categoria, int position);
     }
 }

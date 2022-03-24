@@ -35,7 +35,8 @@ public class MyApplication extends Application {
 
     private void setUpRealmConfig(){
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder()
+
+        RealmConfiguration config = new RealmConfiguration.Builder().name("MundoGlaciar")
                 .deleteRealmIfMigrationNeeded()
                 .allowWritesOnUiThread(true)
                 .build();

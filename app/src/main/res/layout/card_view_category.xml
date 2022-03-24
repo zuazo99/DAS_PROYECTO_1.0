@@ -40,15 +40,27 @@
             android:padding="10dp"
             android:maxLines="3"
             android:maxLength="100"
+            android:fontFamily="@font/open_sans_bold"
             android:textColor="@color/colorPrimaryText" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorDivider"/>
-        <RelativeLayout            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/buttonEditCategoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@android:color/transparent"
+                android:text="@string/editarCategoria"
+                android:textColor="@color/colorAccent" />
 
             <Button
                 android:id="@+id/buttonDeleteCategoria"

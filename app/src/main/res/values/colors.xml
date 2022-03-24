@@ -10,5 +10,6 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="white">#ffffff</color>
     <color name="blue">#469FEC</color>
+    <color name="orangePrimary">#FF5722</color>
 
 </resources>

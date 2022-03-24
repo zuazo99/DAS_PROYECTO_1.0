@@ -17,4 +17,5 @@
     <string name="titulo_Add_Actividad">Crear nueva Categoria</string>
     <string name="addNewCategoryToast">Los datos no son validos, intentalo de nuevo</string>
     <string name="btnGaleria">Añadir desde Galeria...</string>
+    <string name="editarCategoria">Editar</string>
 </resources>

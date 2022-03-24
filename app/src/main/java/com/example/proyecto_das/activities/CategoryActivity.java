@@ -63,16 +63,23 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Categoria categoria, int position) {
                 //Si pulsa el card view --> activity de editar o crear una nueva categoria
-                Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
-                intent.putExtra("id", categoria.getId());
+                Intent intent = new Intent(CategoryActivity.this, EsquisActivity.class);
                 startActivity(intent);
             }
         }, new CategoryAdapter.OnButtonClickListener() {
             @Override
-            public void onButtonClick(Categoria categoria, int position) {
+            public void onButtonDeleteClick(Categoria categoria, int position) {
                 // Boton delete borramos la categoria --> le avisamos mediante un dialog
                 dialogBorrarCategoria("Borrar Categoria", "Estas seguro que quieres borrar" + categoria.getNombre() + "?", position);
             }
+
+            @Override
+            public void onButtonEditClick(Categoria categoria, int position) {
+                Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
+                intent.putExtra("id", categoria.getId());
+                startActivity(intent);
+            }
+
         });
 
         recyclerView.setAdapter(adapter);
