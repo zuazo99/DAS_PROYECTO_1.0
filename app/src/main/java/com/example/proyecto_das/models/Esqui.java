@@ -10,7 +10,6 @@ public class Esqui extends RealmObject {
 
     @PrimaryKey
     private int id;
-    @Required
     private double precio;
     private String nombreMarca;
     @Required

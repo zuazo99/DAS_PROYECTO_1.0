@@ -18,4 +18,6 @@
     <string name="addNewCategoryToast">Los datos no son validos, intentalo de nuevo</string>
     <string name="btnGaleria">Añadir desde Galeria...</string>
     <string name="editarCategoria">Editar</string>
+    <string name="add_edit_esqui_marca">Marca</string>
+    <string name="add_edit_esqui_modeloEsqui">Modelo</string>
 </resources>

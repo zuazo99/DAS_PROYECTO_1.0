@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_das.R;
-import com.example.proyecto_das.models.Categoria;
 import com.example.proyecto_das.models.Esqui;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
