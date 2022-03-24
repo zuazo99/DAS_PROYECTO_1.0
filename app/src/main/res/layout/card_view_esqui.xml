@@ -44,6 +44,10 @@
             android:fontFamily="@font/open_sans_bold"
             android:textColor="@color/colorPrimaryText"
             android:text="SALOMON S/RACE"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorDivider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -64,7 +68,7 @@
                 android:id="@+id/editTextSimboloEuro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="-8dp"
                 android:layout_toEndOf="@+id/textViewPrecioEsqui"
                 android:fontFamily="@font/open_sans_bold"
                 android:inputType="number"
@@ -72,6 +76,32 @@
                 android:text="€"
                 android:textColor="@color/orangePrimary" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:src="@mipmap/ic_star" />
+
+            <TextView
+                android:id="@+id/textViewStars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="12dp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

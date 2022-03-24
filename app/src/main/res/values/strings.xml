@@ -14,10 +14,13 @@
     <string name="deleteCategoria">BORRAR</string>
     <string name="editCategoria">EDITAR</string>
     <string name="titulo_Editar_Actividad">Editar Categoria</string>
-    <string name="titulo_Add_Actividad">Crear nueva Categoria</string>
+    <string name="titulo_Add_Actividad">Añadir nueva Categoria</string>
     <string name="addNewCategoryToast">Los datos no son validos, intentalo de nuevo</string>
     <string name="btnGaleria">Añadir desde Galeria...</string>
     <string name="editarCategoria">Editar</string>
     <string name="add_edit_esqui_marca">Marca</string>
     <string name="add_edit_esqui_modeloEsqui">Modelo</string>
+    <string name="dialog_borrar">Borrar</string>
+    <string name="titulo_Editar_Esqui">Editar Esqui</string>
+    <string name="titulo_Add_Esqui">Añadir nuevo modelo de Esqui</string>
 </resources>

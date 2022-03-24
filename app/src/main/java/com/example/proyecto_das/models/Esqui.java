@@ -11,25 +11,29 @@ public class Esqui extends RealmObject {
     @PrimaryKey
     private int id;
     private double precio;
+    @Required
     private String nombreMarca;
     @Required
     private String nombreProd;
     private String descripcion;
+    @Required
     private String imagen;
     private boolean fromGalery;
+    private float stars;
 
 
     public Esqui(){
 
     }
 
-    public Esqui(String nombreMarca, String imagen, String nombreProd, String descripcion, double precio) {
+    public Esqui(String nombreMarca, String imagen, String nombreProd, String descripcion, double precio, float stars) {
         this.id = MyApplication.EsquiID.incrementAndGet();
         this.precio = precio;
         this.nombreMarca = nombreMarca;
         this.imagen = imagen;
         this.nombreProd = nombreProd;
         this.descripcion = descripcion;
+        this.stars = stars;
     }
 
     public int getId() {
@@ -86,5 +90,13 @@ public class Esqui extends RealmObject {
 
     public void setFromGalery(boolean fromGalery) {
         this.fromGalery = fromGalery;
+    }
+
+    public float getStars() {
+        return stars;
+    }
+
+    public void setStars(float stars) {
+        this.stars = stars;
     }
 }

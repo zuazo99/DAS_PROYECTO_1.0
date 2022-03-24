@@ -57,7 +57,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Button btnPreview;
     private Button btnGallery;
-    private boolean fromGalery = false;
+    private boolean fromGalery = false; // Para saber si la foto es de galeria o no
     private Uri path;
     private String direktorio;
 
@@ -220,6 +220,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     }
 
     private void setActivityTitle(){
+        // Para cambiar el titulo de la actividad dependiendo de si es para editar/crear
         String title = getString(R.string.titulo_Editar_Actividad);
         if (isCreation) title = getString(R.string.titulo_Add_Actividad);
         textViewTitle.setText(title);

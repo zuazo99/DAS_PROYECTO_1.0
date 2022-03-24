@@ -62,6 +62,7 @@ public class EsquiAdapter extends RecyclerView.Adapter<EsquiAdapter.ViewHolder>{
         public TextView esquiNombreMarca;
         public TextView esquiNombreModelo;
         public TextView esquiPrecio;
+        public TextView stars;
         public Button btnDelete;
         public Button btnEdit;
 
@@ -71,6 +72,7 @@ public class EsquiAdapter extends RecyclerView.Adapter<EsquiAdapter.ViewHolder>{
             esquiNombreMarca = itemView.findViewById(R.id.textViewEsquiMarca);
             esquiNombreModelo = itemView.findViewById(R.id.textViewEsquiNombreModelo);
             esquiPrecio = itemView.findViewById(R.id.textViewPrecioEsqui);
+            stars = itemView.findViewById(R.id.textViewStars);
             btnDelete = itemView.findViewById(R.id.buttonDeleteEsqui);
             btnEdit = itemView.findViewById(R.id.buttonEditEsqui);
         }
@@ -79,6 +81,7 @@ public class EsquiAdapter extends RecyclerView.Adapter<EsquiAdapter.ViewHolder>{
             esquiNombreMarca.setText(esqui.getNombreMarca());
             esquiNombreModelo.setText(esqui.getNombreProd());
             esquiPrecio.setText((int) esqui.getPrecio());
+            stars.setText((int)esqui.getStars());
             // Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
 
             if (esqui.getFromGalery()){

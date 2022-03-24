@@ -64,6 +64,7 @@ public class CategoryActivity extends AppCompatActivity {
             public void onItemClick(Categoria categoria, int position) {
                 //Si pulsa el card view --> activity de editar o crear una nueva categoria
                 Intent intent = new Intent(CategoryActivity.this, EsquisActivity.class);
+                intent.putExtra("id", categorias.get(position).getId());
                 startActivity(intent);
             }
         }, new CategoryAdapter.OnButtonClickListener() {
@@ -141,7 +142,7 @@ public class CategoryActivity extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_borrar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         borrarCategoria(position);
