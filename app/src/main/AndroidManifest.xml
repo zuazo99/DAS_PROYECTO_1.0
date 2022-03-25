@@ -14,9 +14,10 @@
         <activity
             android:name=".activities.AddEditCategoryActivity"
             android:exported="false" />
+        <activity android:name=".activities.EsquisActivity"
+            android:exported="false"/>
         <activity android:name=".activities.AddEditEsquiActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:exported="false"/>
         <activity
             android:name=".activities.CategoryActivity"
             android:exported="true">

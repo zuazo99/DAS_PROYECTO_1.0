@@ -64,7 +64,7 @@ public class CategoryActivity extends AppCompatActivity {
             public void onItemClick(Categoria categoria, int position) {
                 //Si pulsa el card view --> activity de editar o crear una nueva categoria
                 Intent intent = new Intent(CategoryActivity.this, EsquisActivity.class);
-                intent.putExtra("id", categorias.get(position).getId());
+                intent.putExtra("id", categoria.getId());
                 startActivity(intent);
             }
         }, new CategoryAdapter.OnButtonClickListener() {

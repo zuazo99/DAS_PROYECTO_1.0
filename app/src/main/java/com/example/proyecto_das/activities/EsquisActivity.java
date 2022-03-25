@@ -46,29 +46,29 @@ public class EsquisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_esqui);
 
         realm = Realm.getDefaultInstance();
+
         if (getIntent().getExtras() != null){
             categoriaID = getIntent().getExtras().getInt("id");
         }
 
         categoria = realm.where(Categoria.class).equalTo("id", categoriaID).findFirst();
-        categoria.addChangeListener(new RealmChangeListener<Categoria>() {
-            @Override
-            public void onChange(Categoria categoria) {
-                adapter.notifyDataSetChanged();
-            }
-        });
-        setHideShowFAB();
+
         esquis = categoria.getEsquis();
-        setTitle(categoria.getNombre());
-        fab = findViewById(R.id.FABSaveEsqui);
+        recyclerView = findViewById(R.id.recyclerViewEsqui);
+        fab = findViewById(R.id.FABAddEsqui);
+        setHideShowFAB();
+
+        //setTitle(categoria.getNombre());
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EsquisActivity.this, AddEditEsquiActivity.class);
+                intent.putExtra("id_categoria", categoria.getId());
                 startActivity(intent);
             }
         });
-        recyclerView = findViewById(R.id.recyclerViewEsqui);
+
         adapter = new EsquiAdapter(esquis, R.layout.card_view_esqui, new EsquiAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Esqui esqui, int position) {
@@ -84,15 +84,21 @@ public class EsquisActivity extends AppCompatActivity {
             @Override
             public void onButtonEditClick(Esqui esqui, int position) {
                 Intent intent = new Intent(EsquisActivity.this, AddEditEsquiActivity.class);
-                intent.putExtra("id", esqui.getId());
+                intent.putExtra("id_Esqui", esqui.getId());
                 startActivity(intent);
             }
         });
+
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        categoria.addChangeListener(new RealmChangeListener<Categoria>() {
+            @Override
+            public void onChange(Categoria categoria) {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
 

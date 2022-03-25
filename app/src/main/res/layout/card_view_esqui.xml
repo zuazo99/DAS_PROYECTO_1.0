@@ -71,7 +71,6 @@
                 android:layout_marginStart="-8dp"
                 android:layout_toEndOf="@+id/textViewPrecioEsqui"
                 android:fontFamily="@font/open_sans_bold"
-                android:inputType="number"
                 android:padding="10dp"
                 android:text="€"
                 android:textColor="@color/orangePrimary" />
@@ -99,7 +98,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="12dp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                />
 
         </LinearLayout>
         <View

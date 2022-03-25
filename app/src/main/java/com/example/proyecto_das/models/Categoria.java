@@ -5,11 +5,14 @@ import com.example.proyecto_das.app.MyApplication;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Categoria extends RealmObject {
     @PrimaryKey
     private int id;
+    @Required
     private String nombre;
+    @Required
     private String imagen;
     private String descripcion;
     private boolean fromGalery;

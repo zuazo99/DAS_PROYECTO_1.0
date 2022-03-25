@@ -1,12 +1,16 @@
 package com.example.proyecto_das.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.proyecto_das.R;
+import com.example.proyecto_das.models.Categoria;
 import com.example.proyecto_das.models.Esqui;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Callback;
@@ -30,14 +35,17 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 
 public class AddEditEsquiActivity extends AppCompatActivity {
 
     private Realm realm;
     private int esquiId;
+    private Categoria categoria;
+    private int categoriaID;
     private boolean isCreation; //Para saber si editamos o creamos
     private boolean fromGalery = false; // Para saber si la foto es de galeria o no
-
+    private RealmList<Esqui> esquis;
 
 
     private Esqui esqui;
@@ -59,7 +67,7 @@ public class AddEditEsquiActivity extends AppCompatActivity {
 
 
 
-    private static final int PHOTO_SELECTED = 1; // El codigo del intent para luego poder recuperar la imagen
+    private static final int PHOTO_SELECTED = 10; // El codigo del intent para luego poder recuperar la imagen
 
 
 
@@ -67,17 +75,27 @@ public class AddEditEsquiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_esqui);
-        
+
         realm = Realm.getDefaultInstance();
         viewReferencesSki();
 
-            // Comprobar si va a ser una accion para editar o para crear
-            if(getIntent().getExtras() != null){
-                esquiId = getIntent().getExtras().getInt("id");
+
+        // Comprobar si va a ser una accion para editar o para crear
+        if (getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            // Para saber a la categoria que pertenece el esqui
+            categoriaID = getIntent().getExtras().getInt("id_categoria");
+            if (bundle.getInt("id_Esqui") != 0) {
+                esquiId = getIntent().getExtras().getInt("id_Esqui");
                 isCreation = false;
-            }else{
+            } else {
                 isCreation = true;
             }
+        }
+
+            categoriaID = getIntent().getExtras().getInt("id_categoria");
+
+            categoria = realm.where(Categoria.class).equalTo("id", categoriaID).findFirst();
             setActivityTitle();
 
             if(!isCreation){
@@ -89,7 +107,11 @@ public class AddEditEsquiActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addNewEsqui();
+                    if(!isCreation){
+                        updateEsqui();
+                    }else{
+                        addNewEsqui();
+                    }
                 }
             });
 
@@ -112,13 +134,90 @@ public class AddEditEsquiActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // Mayor que la version 6.0
                         //Comprobar si ha aceptado, no ha aceptado, o nunca se le ha preguntado
                         if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            // ha aceptado
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType("image/*");
+                            startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
+                        }else{
+                            // o  ha denegado o es la primera vez que se le pregunta
+                            if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){
+                                //No se le ha preguntado aun
+                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PHOTO_SELECTED);
 
+                            }else {
+                                // Ha denegado
+                                Toast.makeText(AddEditEsquiActivity.this, "Porfavor, acepta los permisos", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                i.addCategory(Intent.CATEGORY_DEFAULT);
+                                i.setData(Uri.parse("package:" + getPackageName()));
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //
+                                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); // excluir del flujo
+                                startActivity(i);
+                            }
                         }
                     }else{
                         olderVersion();
                     }
                 }
             });
+    }
+
+
+// Metodo de respuesta de startActivityForResult
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        switch (requestCode) {
+            case PHOTO_SELECTED:
+                if (resultCode == Activity.RESULT_OK) {
+                    //Cargar imagen desde la galeria
+                    path = data.getData();
+                    direktorio = getRealPathFromUri(path);
+                    Toast.makeText(this, path.getPath(), Toast.LENGTH_LONG).show();
+                    if (direktorio != null) {
+                        fromGalery = true;
+                        Picasso.get().load(new File(getRealPathFromUri(path))).placeholder(R.drawable.placeholder).fit().into(esquiImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Toast.makeText(AddEditEsquiActivity.this, "Error!!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+
+
+                }
+                break;
+
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+//
+        }
+    }
+
+    // ** Obtener la uri de la imagen ** //
+
+    private String getRealPathFromUri(Uri contentUri){
+        String result = null;
+
+        if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+            if (cursor == null) { // Source is Dropbox or other similar local file path
+                result = contentUri.getPath();
+            } else {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                result = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return result;
     }
 
     private void loadImageLink(String link) {
@@ -131,7 +230,7 @@ public class AddEditEsquiActivity extends AppCompatActivity {
         editTextMarcaEsqui.setText(esqui.getNombreMarca());
         editTextModeloEsqui.setText(esqui.getNombreProd());
         ratingBarEsqui.setRating(esqui.getStars());
-        editTextPrecioEsqui.setText((int) esqui.getPrecio());
+        editTextPrecioEsqui.setText(String.valueOf(esqui.getPrecio()));
         if (fromGalery){
             Picasso.get().load(new File(esqui.getImagen())).placeholder(R.drawable.placeholder).fit().into(esquiImage, new Callback() {
                 @Override
@@ -141,7 +240,7 @@ public class AddEditEsquiActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(Exception e) {
-                    Toast.makeText(AddEditEsquiActivity.this, "Error en el setDatosCategori", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEditEsquiActivity.this, "Error en el setDatosESqui ", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -218,8 +317,43 @@ public class AddEditEsquiActivity extends AppCompatActivity {
 
             realm.executeTransaction(r->{
                 r.copyToRealmOrUpdate(esqui);
+                categoria.getEsquis().add(esqui);
             });
             goToEsquiActivity();
+        }else{
+            Toast.makeText(this, getString(R.string.addNewCategoryToast), Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+    private void updateEsqui(){
+        String marca = null;
+        String modeloEsqui = null;
+        String link = null;
+        String descripcion = null;
+        float stars;
+        double precio;
+        if(validarDatosEsquisNuevos()){
+            marca = editTextMarcaEsqui.getText().toString();
+            modeloEsqui = editTextModeloEsqui.getText().toString();
+            stars = ratingBarEsqui.getRating();
+            link = editTextLinkEsqui.getText().toString();
+            descripcion = editTextEsquiDescripcion.getText().toString();
+            precio = Double.valueOf(editTextPrecioEsqui.getText().toString());
+            boolean galeria = fromGalery;
+            if (galeria) link = direktorio;
+            Esqui esqui = new Esqui(marca, link, modeloEsqui, descripcion, precio, stars);
+            esqui.setFromGalery(galeria);
+            esqui.setId(esquiId);
+
+            realm.executeTransaction(r->{
+                r.copyToRealmOrUpdate(esqui);
+            });
+            goToEsquiActivity();
+        }else{
+            Toast.makeText(this, getString(R.string.addNewCategoryToast), Toast.LENGTH_SHORT).show();
+
         }
     }
 

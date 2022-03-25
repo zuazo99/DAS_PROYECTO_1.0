@@ -147,6 +147,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
     }
 
+// Metodo de respuesta de startActivityForResult
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

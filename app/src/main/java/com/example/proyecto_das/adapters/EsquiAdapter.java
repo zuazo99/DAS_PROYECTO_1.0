@@ -80,8 +80,8 @@ public class EsquiAdapter extends RecyclerView.Adapter<EsquiAdapter.ViewHolder>{
         public void bind(final Esqui esqui, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
             esquiNombreMarca.setText(esqui.getNombreMarca());
             esquiNombreModelo.setText(esqui.getNombreProd());
-            esquiPrecio.setText((int) esqui.getPrecio());
-            stars.setText((int)esqui.getStars());
+            esquiPrecio.setText(String.valueOf(esqui.getPrecio()));
+            stars.setText(String.valueOf(esqui.getStars()));
             // Picasso.get().load(categoria.getImagen()).placeholder(R.drawable.placeholder).fit().into(categoriaFoto); //Libreria usada para el manejo de imagenes
 
             if (esqui.getFromGalery()){
