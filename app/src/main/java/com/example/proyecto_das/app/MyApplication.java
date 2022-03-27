@@ -52,6 +52,7 @@ public class MyApplication extends Application {
 
                         realm.insertOrUpdate(categoria);
                         realm.insertOrUpdate(categoria1);
+                        realm.insertOrUpdate(slalon);
                         realm.insertOrUpdate(esqui);
 
                     }
