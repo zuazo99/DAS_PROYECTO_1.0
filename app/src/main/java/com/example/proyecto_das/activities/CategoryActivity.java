@@ -71,7 +71,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onButtonDeleteClick(Categoria categoria, int position) {
                 // Boton delete borramos la categoria --> le avisamos mediante un dialog
-                dialogBorrarCategoria("Borrar Categoria", "Estas seguro que quieres borrar" + categoria.getNombre() + "?", position);
+                dialogBorrarCategoria(getString(R.string.dialogBorrarCategoria), getString(R.string.dialogBorrarCategoriaMEssage) + categoria.getNombre() + "?", position);
             }
 
             @Override
@@ -146,7 +146,7 @@ public class CategoryActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         borrarCategoria(position);
-                        Toast.makeText(CategoryActivity.this, "Se ha borrado con exito", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CategoryActivity.this, getString(R.string.dialogBorrarCategoriaToast), Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("Cancel", null).show();

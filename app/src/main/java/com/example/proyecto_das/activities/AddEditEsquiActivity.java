@@ -241,7 +241,7 @@ public class AddEditEsquiActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(Exception e) {
-                    Toast.makeText(AddEditEsquiActivity.this, "Error en el setDatosESqui ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEditEsquiActivity.this, "Error ", Toast.LENGTH_SHORT).show();
                 }
             });
 

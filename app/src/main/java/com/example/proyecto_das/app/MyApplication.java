@@ -3,6 +3,7 @@ package com.example.proyecto_das.app;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.proyecto_das.R;
 import com.example.proyecto_das.models.Categoria;
 import com.example.proyecto_das.models.Esqui;
 
@@ -43,15 +44,15 @@ public class MyApplication extends Application {
                     public void execute(Realm realm) {
                         Categoria categoria = new Categoria("FreeStyle",
                                 "https://cdn-s-www.lalsace.fr/images/1582E271-6990-443F-BE24-7DC102E3EE22/NW_raw/dara-howell-premiere-championne-olympique-de-ski-slopestyle-photo-afp-j-sorriano-1596542410.jpg",
-                                "Para los amantes");
+                                getString(R.string.initialData_FreeStyle_Description));
 
-                        Categoria categoria1 = new Categoria("FreeRide", "https://www.skischule-fiss-ladis.at/uploads/tx_bh/sfl_skikurse_freeride_9.jpg?mod=1407166384", "Para los amantes del puro esqui");
+                        Categoria categoria1 = new Categoria("FreeRide", "https://www.skischule-fiss-ladis.at/uploads/tx_bh/sfl_skikurse_freeride_9.jpg?mod=1407166384", getString(R.string.initialData_FreeRide_Description));
                         Esqui esqui = new Esqui("ATOMIC", "https://www.snowcountry.eu/media/catalog/product/cache/31b8a3b5dbd0c4cbc4ada78b51a1a9c9/a/t/atomic-backland-85-ul.jpg", "Atomic BackLand", "Esquis perfectos para practicar", 400, 3);
 
                         realm.insertOrUpdate(categoria);
                         realm.insertOrUpdate(categoria1);
                         realm.insertOrUpdate(esqui);
-                        categoria.getEsquis().add(esqui);
+
                     }
                 })
                 .deleteRealmIfMigrationNeeded()

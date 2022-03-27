@@ -25,7 +25,7 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 
-public class EsquisActivity extends AppCompatActivity {
+public class EsquisActivity extends AppCompatActivity implements RealmChangeListener<Categoria> {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -52,7 +52,7 @@ public class EsquisActivity extends AppCompatActivity {
         }
 
         categoria = realm.where(Categoria.class).equalTo("id", categoriaID).findFirst();
-
+        categoria.addChangeListener(this);
         esquis = categoria.getEsquis();
         recyclerView = findViewById(R.id.recyclerViewEsqui);
         fab = findViewById(R.id.FABAddEsqui);
@@ -78,13 +78,13 @@ public class EsquisActivity extends AppCompatActivity {
             @Override
             public void onButtonDeleteClick(Esqui esqui, int position) {
                 // Boton delete borramos el modelo del esqui --> le avisamos mediante un dialog
-                dialogBorrarEsqui("Borrar Modelo de Esqui", "Estas seguro que quieres borrar" + esqui.getNombreProd() + "?", esqui);
+                dialogBorrarEsqui(getString(R.string.dialogBorrarEsquiTitle), getString(R.string.dialogBorrarEsquiMessage) + esqui.getNombreProd() + "?", esqui);
             }
 
             @Override
             public void onButtonEditClick(Esqui esqui, int position) {
                 Intent intent = new Intent(EsquisActivity.this, AddEditEsquiActivity.class);
-                intent.putExtra("id_Esqui", esqui.getId());
+                intent.putExtra("id_Esqui", categoria.getEsquis().get(position).getId());
                 startActivity(intent);
             }
         });
@@ -93,12 +93,7 @@ public class EsquisActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        categoria.addChangeListener(new RealmChangeListener<Categoria>() {
-            @Override
-            public void onChange(Categoria categoria) {
-                adapter.notifyDataSetChanged();
-            }
-        });
+
     }
 
 
@@ -138,11 +133,16 @@ public class EsquisActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         borrarCategoria(esqui);
-                        Toast.makeText(EsquisActivity.this, "Se ha borrado con exito", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EsquisActivity.this, getString(R.string.dialogBorrarEsquiToast), Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("Cancel", null).show();
 
 
+    }
+
+    @Override
+    public void onChange(Categoria categoria) {
+        adapter.notifyDataSetChanged();
     }
 }

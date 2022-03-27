@@ -72,7 +72,6 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_category);
-
         realm = Realm.getDefaultInstance();
         viewReferences();
         notificationHandler = new NotificationHandler(this);
@@ -120,7 +119,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
                         // ha aceptado
                         Intent intent = new Intent(Intent.ACTION_PICK);
                         intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
+                        startActivityForResult(Intent.createChooser(intent, getString(R.string.createChooser_Permisos_Galeria)), PHOTO_SELECTED);
                     }else{
                         // o  ha denegado o es la primera vez que se le pregunta
                         if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){
@@ -129,7 +128,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
                         }else{
                             // Ha denegado
-                            Toast.makeText(AddEditCategoryActivity.this, "Porfavor, acepta los permisos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddEditCategoryActivity.this, getString(R.string.denegado_Permisos), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                             i.addCategory(Intent.CATEGORY_DEFAULT);
                             i.setData(Uri.parse("package:" + getPackageName()));
@@ -151,10 +150,11 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
-        String title = "Mundo Glaciar";
-        String message = "Se ha creado una nueva categoria!";
+        String title = getString(R.string.titleNotification);
+        String message = getString(R.string.messageNotification);
 
         Notification.Builder nb = notificationHandler.createNotification(title, message, true);
+        notificationHandler.getManager().notify(1, nb.build());
     }
 
 // Metodo de respuesta de startActivityForResult
@@ -255,7 +255,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(Exception e) {
-                    Toast.makeText(AddEditCategoryActivity.this, "Error en el setDatosCategori", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEditCategoryActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -332,9 +332,9 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK);
         if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)){
             intent.setType("image/*");
-            startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
+            startActivityForResult(Intent.createChooser(intent, "Selection la aplicacion"), PHOTO_SELECTED);
         }else{
-            Toast.makeText(this, "No tienes los permisos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.olderVersion_Permission), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -361,10 +361,10 @@ public class AddEditCategoryActivity extends AppCompatActivity {
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
-                    startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), PHOTO_SELECTED);
+                    startActivityForResult(Intent.createChooser(intent, getString(R.string.createChooser_Permisos_Galeria)), PHOTO_SELECTED);
                 }else{
                     // No concedido el permiso
-                    Toast.makeText(this, "No tienes los permisos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.olderVersion_Permission), Toast.LENGTH_SHORT).show();
 
                 }
                 break;
