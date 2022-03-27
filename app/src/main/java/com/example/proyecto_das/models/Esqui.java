@@ -16,7 +16,7 @@ public class Esqui extends RealmObject {
     @Required
     private String nombreProd;
     private String descripcion;
-    @Required
+
     private String imagen;
     private boolean fromGalery;
     private float stars;

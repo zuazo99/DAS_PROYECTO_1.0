@@ -230,6 +230,7 @@ public class AddEditEsquiActivity extends AppCompatActivity {
         editTextMarcaEsqui.setText(esqui.getNombreMarca());
         editTextModeloEsqui.setText(esqui.getNombreProd());
         ratingBarEsqui.setRating(esqui.getStars());
+        editTextEsquiDescripcion.setText(esqui.getDescripcion());
         editTextPrecioEsqui.setText(String.valueOf(esqui.getPrecio()));
         if (fromGalery){
             Picasso.get().load(new File(esqui.getImagen())).placeholder(R.drawable.placeholder).fit().into(esquiImage, new Callback() {
@@ -250,7 +251,8 @@ public class AddEditEsquiActivity extends AppCompatActivity {
         }
     }
 
-    private Esqui getEsquiById(int esquiId) { 
+    private Esqui getEsquiById(int esquiId) {
+        //Para conseguir el esqui a traves de su id
             return  realm.where(Esqui.class).equalTo("id", esquiId).findFirst();
     }
 
@@ -344,10 +346,11 @@ public class AddEditEsquiActivity extends AppCompatActivity {
             boolean galeria = fromGalery;
             if (galeria) link = direktorio;
             Esqui esqui = new Esqui(marca, link, modeloEsqui, descripcion, precio, stars);
-            esqui.setFromGalery(galeria);
-            esqui.setId(esquiId);
+
 
             realm.executeTransaction(r->{
+                esqui.setFromGalery(galeria);
+                esqui.setId(esquiId);
                 r.copyToRealmOrUpdate(esqui);
             });
             goToEsquiActivity();

@@ -236,6 +236,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         editTextCategoryDescription.setText(categoria.getDescripcion());
 
         if (fromGalery){
+            // Foto importada desde la galeria
             Picasso.get().load(new File(categoria.getImagen())).placeholder(R.drawable.placeholder).fit().into(categoryImage, new Callback() {
                 @Override
                 public void onSuccess() {
@@ -264,12 +265,6 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         return realm.where(Categoria.class).equalTo("id", categoriaId).findFirst();
     }
 
-    private void editarCategoria(String imagen, String descripcion, Categoria categoria){
-        realm.executeTransaction(r->{
-            categoria.setImagen(imagen); categoria.setDescripcion(descripcion);
-            realm.copyToRealmOrUpdate(categoria);
-        });
-    }
 
     private boolean validarDatosCategoriaNueva() {
         // Validamos en este metodo que los datos esten correctos y la informacion completa, que no haya ningun editTExt vacio
