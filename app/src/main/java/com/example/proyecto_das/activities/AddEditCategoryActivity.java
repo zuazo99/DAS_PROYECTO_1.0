@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -63,6 +64,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     private Uri path;
     private String direktorio;
 
+    private NotificationHandler notificationHandler;
 
     private static final int PHOTO_SELECTED = 1; // El codigo del intent para luego poder recuperar la imagen
 
@@ -73,7 +75,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
         viewReferences();
-
+        notificationHandler = new NotificationHandler(this);
         // Comprobar si va a ser una accion para editar o para crear
         if(getIntent().getExtras() != null){
             categoriaId = getIntent().getExtras().getInt("id");
@@ -92,6 +94,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addNewCategory();
+                sendNotification();
             }
         });
 
@@ -145,6 +148,13 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void sendNotification() {
+        String title = "Mundo Glaciar";
+        String message = "Se ha creado una nueva categoria!";
+
+        Notification.Builder nb = notificationHandler.createNotification(title, message, true);
     }
 
 // Metodo de respuesta de startActivityForResult
