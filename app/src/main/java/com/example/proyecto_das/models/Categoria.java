@@ -27,7 +27,6 @@ public class Categoria extends RealmObject {
         this.nombre = nombre;
         this.imagen = imagen;
         this.descripcion = descripcion;
-        //this.fromGalery = false;
         esquis = new RealmList<Esqui>();
     }
 

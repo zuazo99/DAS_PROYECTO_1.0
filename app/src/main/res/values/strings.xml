@@ -7,7 +7,6 @@
     <string name="koala">Koala</string>
     <string name="nombreApp">Mundo Glaciar</string>
     <string name="descripcionApp">Compra los mejores productos en nuestra tienda</string>
-    <string name="buscar">Buscar</string>
     <string name="nombre_add_edit_categoria">Nombre</string>
     <string name="link_add_edit_categoria">Link Imagen... (http://myimg.com/imagen.jpg)</string>
     <string name="description_add_edit_category">Descripción</string>
@@ -24,17 +23,17 @@
     <string name="titulo_Editar_Esqui">Editar Esqui</string>
     <string name="titulo_Add_Esqui">Añadir nuevo modelo de Esqui</string>
     <string name="add_edit_esqui_precio">Precio</string>
-    <string name="initialData_FreeStyle_Description">Para los amantes</string>
+    <string name="initialData_FreeStyle_Description">Para los amantes del freeStyle</string>
     <string name="initialData_FreeRide_Description">Para los amantes del puro esqui</string>
-    <string name="createChooser_Permisos_Galeria">Seleccione la aplicacion</string>
-    <string name="denegado_Permisos">Porfavor, acepta los permisos</string>
+    <string name="createChooser_Permisos_Galeria">Seleccione la aplicación</string>
+    <string name="denegado_Permisos">Por favor, acepta los permisos</string>
     <string name="titleNotification">Mundo Glaciar</string>
     <string name="messageNotification">Se ha creado una nueva categoria!</string>
     <string name="olderVersion_Permission">No tienes los permisos</string>
     <string name="dialogBorrarEsquiTitle">Borrar Modelo de Esqui</string>
-    <string name="dialogBorrarEsquiMessage">Estas seguro que quieres borrar</string>
+    <string name="dialogBorrarEsquiMessage">Estás seguro que quieres borrar</string>
     <string name="dialogBorrarEsquiToast">Se ha borrado con exito</string>
     <string name="dialogBorrarCategoria">Borrar Categoria</string>
-    <string name="dialogBorrarCategoriaMEssage">Estas seguro que quieres borrar</string>
+    <string name="dialogBorrarCategoriaMEssage">Estás seguro que quieres borrar</string>
     <string name="dialogBorrarCategoriaToast">Se ha borrado con exito</string>
 </resources>

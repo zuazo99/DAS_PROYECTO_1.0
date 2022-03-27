@@ -7,24 +7,7 @@
     tools:context=".activities.CategoryActivity"
     >
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="349dp"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="349dp"
-        app:layout_constraintStart_toStartOf="parent"/>
+
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -61,16 +44,6 @@
             android:fontFamily="@font/open_sans_light"/>
 
         <ImageView
-            android:id="@+id/imagenCarrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="26dp"
-            android:layout_toEndOf="@+id/imagenOpcion"
-            app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
-
-        <ImageView
             android:id="@+id/imagenOpcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,31 +55,18 @@
     </RelativeLayout>
 
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/custom_search_view"
-        app:iconifiedByDefault="true"
-        android:queryHint="Search Here..."
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCategoria"
         android:layout_width="306dp"
         android:layout_height="485dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="44dp"
         android:padding="@dimen/activity_horizontal_margin"
         android:scrollbars="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/categoriaFAB"

@@ -63,6 +63,7 @@ public class MyApplication extends Application {
 
     //Trabajamos con clase generica, extendera de la clase RealmObject
     //Le pasamos la base de datos REalm y la clase que queremos ejecutar
+    // para incrementar el id de la base de datos
     private <T extends RealmObject> AtomicInteger getIdByTable(Realm realm, Class<T> anyClass){
         RealmResults<T> results = realm.where(anyClass).findAll();
         return (results.size() > 0) ? new AtomicInteger(results.max("id").intValue()): new AtomicInteger();

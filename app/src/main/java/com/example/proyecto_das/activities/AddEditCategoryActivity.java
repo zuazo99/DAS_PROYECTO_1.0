@@ -90,6 +90,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
             setDatosCategoria();
         }
         fab.setOnClickListener(new View.OnClickListener() {
+            // Para guardar los datos en la base de datos
             @Override
             public void onClick(View view) {
                 addNewCategory();
@@ -98,6 +99,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         });
 
         btnPreview.setOnClickListener(new View.OnClickListener() {
+            // Una previsualizacion de la imagen obtenida.
             @Override
             public void onClick(View view) {
                 fromGalery = false;
@@ -349,6 +351,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     }
 
     private boolean hasPermission(String permissionToCheck) {
+        // Este metodo nos devulve true si tenemos los permisos solicitados y flase si no los tenemos
         int permissionCheck = ContextCompat.checkSelfPermission(this, permissionToCheck);
         return (permissionCheck == PackageManager.PERMISSION_GRANTED);
     }

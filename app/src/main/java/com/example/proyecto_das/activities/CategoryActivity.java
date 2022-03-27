@@ -93,8 +93,6 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
 
-        searchView = findViewById(R.id.searchView);
-
         //searchView.setQueryHint("Search view");
         //searchView.setIconifiedByDefault(true);
     }

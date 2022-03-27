@@ -85,6 +85,7 @@ public class NotificationHandler extends ContextWrapper {
     }
 
     private Notification.Builder createNotificationWithoutChannel(String title, String message){
+       // para versiones anteriores a la Oreo
         return new Notification.Builder(getApplicationContext())
                 .setContentTitle(title)
                 .setContentText(message)
