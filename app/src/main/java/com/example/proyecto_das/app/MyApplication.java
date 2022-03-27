@@ -47,6 +47,7 @@ public class MyApplication extends Application {
                                 getString(R.string.initialData_FreeStyle_Description));
 
                         Categoria categoria1 = new Categoria("FreeRide", "https://www.skischule-fiss-ladis.at/uploads/tx_bh/sfl_skikurse_freeride_9.jpg?mod=1407166384", getString(R.string.initialData_FreeRide_Description));
+                        Categoria slalon = new Categoria("Slalon", "https://images7.alphacoders.com/472/thumb-1920-472689.jpg", "Profesionales");
                         Esqui esqui = new Esqui("ATOMIC", "https://www.snowcountry.eu/media/catalog/product/cache/31b8a3b5dbd0c4cbc4ada78b51a1a9c9/a/t/atomic-backland-85-ul.jpg", "Atomic BackLand", "Esquis perfectos para practicar", 400, 3);
 
                         realm.insertOrUpdate(categoria);
